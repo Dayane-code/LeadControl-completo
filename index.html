@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142B4A">
+  <meta name="description" content="LeadControl — organize seus contatos, acompanhe oportunidades e transforme leads em resultados.">
+  <title>LeadControl — Dashboard de Leads</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <section id="welcomeScreen" class="welcome-screen">
+    <div class="welcome-card login-card">
+      <div class="brand brand-large">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M7 37V25M19 37V17M31 37V10M43 37V5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="7" cy="18" r="4" fill="#16A36A"/><circle cx="19" cy="10" r="4" fill="#16A36A"/><circle cx="31" cy="5" r="4" fill="#16A36A"/></svg>
+        </span>
+        <span>Lead<span class="brand-accent">Control</span></span>
+      </div>
+      <p class="eyebrow">ACESSO AO SISTEMA</p>
+      <h1>Bem-vinda ao LeadControl</h1>
+      <p class="welcome-copy">Entre com as credenciais de demonstração para acessar o painel de leads.</p>
+      <form id="loginForm" class="login-form">
+        <label class="form-field">E-mail
+          <input id="loginEmail" type="email" autocomplete="username" placeholder="seu@email.com" required>
+        </label>
+        <label class="form-field">Senha
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+        </label>
+        <p id="loginError" class="login-error hidden" role="alert">E-mail ou senha incorretos. Tente novamente.</p>
+        <button class="btn btn-primary btn-large" id="enterDashboard" type="submit">Entrar <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="demo-note"><span class="status-dot"></span> Login demonstrativo para apresentação acadêmica</p>
+    </div>
+    <div class="welcome-footer">LeadControl · Projeto acadêmico de Desenvolvimento de Sistemas II</div>
+  </section>
+
+  <div id="appShell" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="#" data-page="overview" aria-label="LeadControl - Visão Geral">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M7 37V25M19 37V17M31 37V10M43 37V5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="7" cy="18" r="4" fill="#16A36A"/><circle cx="19" cy="10" r="4" fill="#16A36A"/><circle cx="31" cy="5" r="4" fill="#16A36A"/></svg>
+          </span>
+          <span class="brand-name">Lead<span class="brand-accent">Control</span></span>
+        </a>
+        <button id="collapseSidebar" class="icon-button collapse-btn" aria-label="Recolher menu" title="Recolher menu">‹</button>
+      </div>
+      <div class="nav-label">MENU PRINCIPAL</div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span><span class="nav-text">Visão Geral</span></button>
+        <button class="nav-item" data-page="leads"><span class="nav-icon">♙</span><span class="nav-text">Leads</span><span class="nav-count" id="navLeadCount">0</span></button>
+        <button class="nav-item" data-page="reports"><span class="nav-icon">▥</span><span class="nav-text">Relatórios</span></button>
+        <button class="nav-item" data-page="about"><span class="nav-icon">ⓘ</span><span class="nav-text">Sobre o Aplicativo</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="storage-note"><span class="storage-icon">▣</span><div class="nav-text"><strong>Modo demonstrativo</strong><small>Armazenamento local</small></div></div>
+        <div class="user-profile"><div class="avatar">A</div><div class="user-copy"><strong>Administrador</strong><small>Usuário do sistema</small></div><span class="profile-dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button id="mobileMenu" class="icon-button mobile-menu" aria-label="Abrir menu">☰</button>
+        <div class="breadcrumb"><span>LeadControl</span><span class="breadcrumb-separator">/</span><strong id="breadcrumbTitle">Visão Geral</strong></div>
+        <div class="topbar-right"><span class="demo-pill"><span class="status-dot"></span> Demonstração</span><div class="avatar avatar-small">A</div></div>
+      </header>
+      <div class="page-container">
+        <section class="page-view" id="page-overview">
+          <div class="page-heading">
+            <div><p class="eyebrow">PAINEL DE CONTROLE</p><h1>Visão Geral</h1><p class="page-subtitle">Acompanhe seus leads e oportunidades em um só lugar.</p></div>
+            <button class="btn btn-primary" data-action="new-lead"><span>＋</span> Novo Lead</button>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total de Leads</span><span class="stat-icon blue">♙</span></div><div class="stat-value" id="statTotal">0</div><div class="stat-foot">Todos os contatos cadastrados</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Novos Leads</span><span class="stat-icon sky">✦</span></div><div class="stat-value" id="statNew">0</div><div class="stat-foot">Aguardando primeiro contato</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Em Atendimento</span><span class="stat-icon orange">◷</span></div><div class="stat-value" id="statContact">0</div><div class="stat-foot">Em acompanhamento</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Em Negociação</span><span class="stat-icon purple">⇄</span></div><div class="stat-value" id="statNegotiation">0</div><div class="stat-foot">Oportunidades em andamento</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Convertidos</span><span class="stat-icon green">✓</span></div><div class="stat-value" id="statConverted">0</div><div class="stat-foot">Leads que viraram clientes</div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel chart-panel"><div class="panel-heading"><div><h2>Leads por status</h2><p>Distribuição dos contatos cadastrados</p></div></div><div class="chart-wrap"><canvas id="statusChart" aria-label="Gráfico de leads por status"></canvas><div id="statusChartFallback" class="chart-fallback hidden">Cadastre leads para visualizar o gráfico.</div></div></article>
+            <article class="panel chart-panel"><div class="panel-heading"><div><h2>Desempenho</h2><p>Cadastros e conversões por mês</p></div></div><div class="chart-wrap"><canvas id="performanceChart" aria-label="Gráfico de desempenho"></canvas><div id="performanceChartFallback" class="chart-fallback hidden">Cadastre leads para visualizar o gráfico.</div></div></article>
+          </div>
+          <div class="dashboard-grid lower-grid">
+            <article class="panel"><div class="panel-heading"><div><h2>Leads recentes</h2><p>Últimos contatos adicionados</p></div><button class="text-button" data-page="leads">Ver todos →</button></div><div class="table-scroll"><table><thead><tr><th>Nome</th><th>Origem</th><th>Status</th><th>Cadastro</th></tr></thead><tbody id="recentLeadsBody"></tbody></table></div><div id="recentEmpty" class="empty-state hidden">Nenhum lead cadastrado ainda.</div></article>
+            <article class="panel activity-panel"><div class="panel-heading"><div><h2>Atividades recentes</h2><p>Últimas atualizações do sistema</p></div></div><div id="activityList" class="activity-list"></div></article>
+          </div>
+        </section>
+
+        <section class="page-view hidden" id="page-leads">
+          <div class="page-heading"><div><p class="eyebrow">RELACIONAMENTO</p><h1>Leads</h1><p class="page-subtitle">Gerencie seus contatos e acompanhe cada oportunidade.</p></div><button class="btn btn-primary" data-action="new-lead"><span>＋</span> Novo Lead</button></div>
+          <div class="panel filters-panel">
+            <div class="search-box"><span aria-hidden="true">⌕</span><input id="searchLeads" type="search" placeholder="Buscar por nome ou telefone..." aria-label="Buscar por nome ou telefone"></div>
+            <select id="filterStatus" aria-label="Filtrar por status"><option value="">Todos os status</option></select>
+            <select id="filterSource" aria-label="Filtrar por origem"><option value="">Todas as origens</option></select>
+            <label class="date-filter"><span>De</span><input id="filterFrom" type="date" aria-label="Data inicial"></label>
+            <label class="date-filter"><span>Até</span><input id="filterTo" type="date" aria-label="Data final"></label>
+            <button id="clearFilters" class="btn btn-secondary">Limpar filtros</button>
+          </div>
+          <div class="panel table-panel">
+            <div class="panel-heading"><div><h2>Todos os leads <span class="subtle-count" id="leadsCount">0</span></h2><p>Informações e status dos seus contatos</p></div><button id="exportCsv" class="btn btn-secondary">↓ Exportar CSV</button></div>
+            <div class="table-scroll"><table class="leads-table"><thead><tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Origem</th><th>Cadastro</th><th>Status</th><th>Ações</th></tr></thead><tbody id="leadsTableBody"></tbody></table></div>
+            <div id="leadsEmpty" class="empty-state hidden"><div class="empty-icon">♙</div><strong>Nenhum lead encontrado</strong><p>Tente alterar os filtros ou cadastre um novo contato.</p><button class="btn btn-primary" data-action="new-lead">＋ Novo Lead</button></div>
+          </div>
+        </section>
+
+        <section class="page-view hidden" id="page-reports">
+          <div class="page-heading"><div><p class="eyebrow">ANÁLISE COMERCIAL</p><h1>Relatórios</h1><p class="page-subtitle">Entenda a distribuição dos contatos e acompanhe os resultados.</p></div><button id="exportCsvReport" class="btn btn-secondary">↓ Exportar CSV</button></div>
+          <div class="report-stats">
+            <article class="report-stat panel"><span>Total de leads</span><strong id="reportTotal">0</strong></article>
+            <article class="report-stat panel"><span>Convertidos</span><strong id="reportConverted">0</strong></article>
+            <article class="report-stat panel"><span>Taxa de conversão</span><strong id="reportRate">0%</strong></article>
+            <article class="report-stat panel"><span>Leads perdidos</span><strong id="reportLost">0</strong></article>
+          </div>
+          <div class="dashboard-grid reports-grid">
+            <article class="panel chart-panel"><div class="panel-heading"><div><h2>Leads por origem</h2><p>De onde vêm seus contatos</p></div></div><div class="chart-wrap"><canvas id="sourceChart" aria-label="Gráfico de leads por origem"></canvas><div id="sourceChartFallback" class="chart-fallback hidden">Não há dados de origem suficientes.</div></div></article>
+            <article class="panel chart-panel"><div class="panel-heading"><div><h2>Cadastros por período</h2><p>Quantidade de leads por mês</p></div></div><div class="chart-wrap"><canvas id="monthlyChart" aria-label="Gráfico de cadastros por período"></canvas><div id="monthlyChartFallback" class="chart-fallback hidden">Cadastre leads para visualizar o gráfico.</div></div></article>
+          </div>
+          <article class="panel report-status-panel"><div class="panel-heading"><div><h2>Resumo por status</h2><p>Quantidade e participação no total</p></div></div><div id="statusSummary" class="status-summary"></div></article>
+        </section>
+
+        <section class="page-view hidden" id="page-about">
+          <div class="page-heading"><div><p class="eyebrow">CONHEÇA O PROJETO</p><h1>Sobre o Aplicativo</h1><p class="page-subtitle">Conheça a proposta e as funcionalidades do LeadControl.</p></div></div>
+          <article class="panel about-hero"><div class="about-brand"><span class="brand-mark"><svg viewBox="0 0 48 48"><path d="M7 37V25M19 37V17M31 37V10M43 37V5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="7" cy="18" r="4" fill="#16A36A"/><circle cx="19" cy="10" r="4" fill="#16A36A"/><circle cx="31" cy="5" r="4" fill="#16A36A"/></svg></span><div><h2>Lead<span class="brand-accent">Control</span></h2><p>Organize seus contatos, acompanhe oportunidades e transforme leads em resultados.</p></div></div><p>Um aplicativo desenvolvido para facilitar a organização de contatos comerciais, o acompanhamento de oportunidades e a visualização de resultados.</p></article>
+          <div class="about-grid"><article class="panel about-card"><span class="about-icon">◎</span><h2>Objetivo</h2><p>Centralizar informações de contatos, facilitar o acompanhamento do atendimento e ajudar a visualizar oportunidades comerciais.</p></article><article class="panel about-card"><span class="about-icon">♙</span><h2>Público-alvo</h2><p>Empreendedores, profissionais de vendas, atendentes e pequenos negócios que precisam organizar seus contatos.</p></article><article class="panel about-card"><span class="about-icon">✓</span><h2>Funcionalidades</h2><p>Cadastro, edição, pesquisa, filtros, acompanhamento de status, relatórios, gráficos e exportação dos dados em CSV.</p></article></div>
+          <article class="panel academic-panel"><div><p class="eyebrow">INFORMAÇÕES ACADÊMICAS</p><h2>Projeto de Desenvolvimento de Sistemas II</h2></div><dl><div><dt>Aluna</dt><dd>Dayane de Jesus</dd></div><div><dt>Turma</dt><dd>42</dd></div><div><dt>Disciplina</dt><dd>Desenvolvimento de Sistemas II</dd></div></dl></article>
+          <article class="notice-panel"><span>ⓘ</span><div><strong>Sobre o armazenamento</strong><p>Esta versão demonstrativa salva os dados no armazenamento local do navegador. Os registros não são enviados a um servidor e não ficam automaticamente disponíveis em outros dispositivos ou navegadores.</p><button id="resetDemo" class="text-button danger-text">Restaurar dados demonstrativos</button></div></article>
+        </section>
+      </div>
+      <footer class="app-footer"><span>LeadControl © 2026</span><span>Versão demonstrativa acadêmica</span></footer>
+    </main>
+  </div>
+
+  <div id="leadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header"><div><p class="eyebrow">CADASTRO DE CONTATO</p><h2 id="modalTitle">Novo Lead</h2></div><button id="closeModal" class="icon-button" aria-label="Fechar">×</button></div>
+      <form id="leadForm">
+        <input type="hidden" id="leadId">
+        <div class="form-grid">
+          <label class="form-field full-field">Nome completo <span>*</span><input id="leadName" required maxlength="100" placeholder="Ex.: Maria da Silva"></label>
+          <label class="form-field">Telefone <span>*</span><input id="leadPhone" required maxlength="30" type="tel" placeholder="Ex.: (21) 99999-9999"></label>
+          <label class="form-field">E-mail <input id="leadEmail" type="email" maxlength="120" placeholder="nome@email.com"></label>
+          <label class="form-field">Origem do lead<select id="leadSource"><option value="">Selecione uma origem</option><option>WhatsApp</option><option>Instagram</option><option>Facebook</option><option>Indicação</option><option>Site</option><option>Telefone</option><option>Outro</option></select></label>
+          <label class="form-field">Status <span>*</span><select id="leadStatus" required></select></label>
+          <label class="form-field">Data de cadastro <span>*</span><input id="leadDate" type="date" required></label>
+          <label class="form-field full-field">Observações<textarea id="leadNotes" rows="3" maxlength="1000" placeholder="Anotações sobre o contato..."></textarea></label>
+        </div>
+        <p class="form-help">Os campos marcados com * são obrigatórios.</p>
+        <div class="modal-actions"><button type="button" id="cancelModal" class="btn btn-secondary">Cancelar</button><button type="submit" class="btn btn-primary">Salvar Lead</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="detailModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <div class="modal-card detail-card">
+      <div class="modal-header"><div><p class="eyebrow">INFORMAÇÕES DO CONTATO</p><h2 id="detailTitle">Detalhes do Lead</h2></div><button id="closeDetail" class="icon-button" aria-label="Fechar">×</button></div>
+      <div id="leadDetails"></div>
+      <div class="modal-actions detail-actions"><button id="deleteLead" class="btn btn-danger-outline">Excluir</button><div class="action-spacer"></div><button id="whatsappLead" class="btn btn-secondary">◉ Abrir WhatsApp</button><button id="editLead" class="btn btn-primary">Editar Lead</button></div>
+    </div>
+  </div>
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

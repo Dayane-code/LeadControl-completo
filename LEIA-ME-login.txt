@@ -1,0 +1,19 @@
+LEADCONTROL — VERSÃO COM LOGIN DEMONSTRATIVO
+
+Arquivos:
+- index.html
+- style.css
+- script.js
+
+Credenciais para apresentação:
+E-mail: demo@leadcontrol.com
+Senha: Lead123!
+
+Como usar:
+1. Extraia todos os arquivos mantendo-os na mesma pasta.
+2. Abra index.html no navegador para testar.
+3. Para usar na aba Página Web da FabApp, publique os três arquivos em um serviço de hospedagem que forneça uma URL HTTPS.
+4. Cole a URL HTTPS do site publicado no campo Conteúdo da Aba > Página Web da FabApp e salve.
+
+Importante:
+Este login é apenas demonstrativo. As credenciais ficam no JavaScript enviado ao navegador e não oferecem segurança real. Os leads continuam salvos no armazenamento local do navegador, não em um banco de dados compartilhado. O site precisa ser publicado em HTTPS para a Página Web da FabApp; teste também dentro do app, pois algumas páginas podem não funcionar em todos os visualizadores.
